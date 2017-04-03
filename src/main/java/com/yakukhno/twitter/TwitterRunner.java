@@ -3,7 +3,8 @@ package com.yakukhno.twitter;
 import com.yakukhno.twitter.domain.Tweet;
 import com.yakukhno.twitter.domain.User;
 import com.yakukhno.twitter.infrastructure.*;
-import com.yakukhno.twitter.repository.TweetRepository;
+import com.yakukhno.twitter.service.TweetService;
+import com.yakukhno.twitter.service.TweetServiceImpl;
 
 public class TwitterRunner {
     public static void main(String[] args) throws Exception {

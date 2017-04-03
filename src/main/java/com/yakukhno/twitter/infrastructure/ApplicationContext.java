@@ -21,67 +21,93 @@ public class ApplicationContext implements Context {
             return bean;
         }
 
-        Class<?> clazz = config.getImpl(beanName);
-        if (clazz == null) {
+        Class<?> type = config.getImpl(beanName);
+        if (type == null) {
             throw new RuntimeException("Bean not found!");
         }
 
-        if (clazz.getConstructors().length != 1) {
-            throw new RuntimeException("Only one constructor is allowed");
-        }
-
-        Constructor<?> constructor = clazz.getConstructors()[0];
-        if (constructor.getParameterTypes().length != 0) {
-            List<Class> args = new ArrayList<>();
-            for (Class<?> argClass : constructor.getParameterTypes()) {
-                String argName = argClass.getSimpleName();
-                String argBeanName = argName.substring(0, 1).toLowerCase()
-                        + argName.substring(1);
-                args.add(getBean(argBeanName));
-            }
-            bean = (T) constructor.newInstance(args.toArray());
-        } else {
-            bean = (T) clazz.newInstance();
-        }
-
-        callPostConstructBean(bean);
-        callInitMethod(bean);
-        bean = createProxy(bean);
+        BeanBuilder builder = new BeanBuilder(type);
+        builder.createBean();
+        builder.callPostConstructMethod();
+        builder.callInitMethod();
+        builder.createBeanProxy();
+        bean = (T) builder.build();
 
         beans.put(beanName, bean);
         return bean;
     }
 
-    private <T> T createProxy(T bean) {
-        Class<?> clazz = bean.getClass();
-        for (Method method : clazz.getMethods()) {
-            if (method.isAnnotationPresent(Benchmark.class)) {
-                bean = (T) Proxy.newProxyInstance(clazz.getClassLoader(),
-                        clazz.getInterfaces(),
-                        new BenchmarkInvocationHandler(bean));
-                break;
+    private class BeanBuilder {
+        private final Class<?> type;
+        private Object bean;
+
+        private BeanBuilder(Class<?> type) {
+            this.type = type;
+        }
+
+        public void createBean() throws Exception {
+            if (type.getConstructors().length != 1) {
+                throw new RuntimeException("Only one constructor is allowed");
+            }
+
+            Constructor<?> constructor = getConstructor();
+            Class<?>[] parameterTypes = constructor.getParameterTypes();
+            if (parameterTypes.length != 0) {
+                List<Class> args = new ArrayList<>(parameterTypes.length);
+                for (Class<?> argClass : parameterTypes) {
+                    String argBeanName = getBeanNameByType(argClass);
+                    args.add(getBean(argBeanName));
+                }
+                bean = constructor.newInstance(args.toArray());
+            } else {
+                bean = type.newInstance();
             }
         }
-        return bean;
-    }
 
-    private <T> void callInitMethod(T bean) throws Exception {
-        Class<?> clazz = bean.getClass();
-        Method method;
-        try {
-            method = clazz.getMethod("init");
-        } catch (NoSuchMethodException ex) {
-            return;
+        private Constructor<?> getConstructor() {
+            return type.getConstructors()[0];
         }
-        method.invoke(bean);
-    }
 
-    private <T> void callPostConstructBean(T bean) throws Exception {
-        Class<?> clazz = bean.getClass();
-        for (Method method : clazz.getMethods()) {
-            if (method.isAnnotationPresent(PostConstructBean.class)) {
-                method.invoke(bean);
+        private String getBeanNameByType(Class<?> argClass) {
+            String argName = argClass.getSimpleName();
+            return argName.substring(0, 1).toLowerCase()
+                    + argName.substring(1);
+        }
+
+        public void callPostConstructMethod() throws Exception {
+            Class<?> clazz = bean.getClass();
+            for (Method method : clazz.getMethods()) {
+                if (method.isAnnotationPresent(PostConstructBean.class)) {
+                    method.invoke(bean);
+                }
             }
+        }
+
+        public void callInitMethod() throws Exception {
+            Class<?> clazz = bean.getClass();
+            Method method;
+            try {
+                method = clazz.getMethod("init");
+            } catch (NoSuchMethodException ex) {
+                return;
+            }
+            method.invoke(bean);
+        }
+
+        public void createBeanProxy() {
+            Class<?> clazz = bean.getClass();
+            for (Method method : clazz.getMethods()) {
+                if (method.isAnnotationPresent(Benchmark.class)) {
+                    bean = Proxy.newProxyInstance(clazz.getClassLoader(),
+                            clazz.getInterfaces(),
+                            new BenchmarkInvocationHandler(bean));
+                    break;
+                }
+            }
+        }
+
+        public Object build() {
+            return bean;
         }
     }
 }

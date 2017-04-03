@@ -1,6 +1,5 @@
 package com.yakukhno.twitter.infrastructure;
 
-import java.lang.annotation.Annotation;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 

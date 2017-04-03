@@ -1,12 +1,13 @@
-package com.yakukhno.twitter.infrastructure;
+package com.yakukhno.twitter.service;
 
 import com.yakukhno.twitter.domain.Tweet;
+import com.yakukhno.twitter.infrastructure.Benchmark;
 import com.yakukhno.twitter.repository.TweetRepository;
 
-public class TweetService {
+public class TweetServiceImpl implements TweetService {
     private TweetRepository tweetRepository;
 
-    public TweetService(TweetRepository tweetRepository) {
+    public TweetServiceImpl(TweetRepository tweetRepository) {
         this.tweetRepository = tweetRepository;
     }
 
@@ -14,6 +15,7 @@ public class TweetService {
         tweetRepository.save(tweet);
     }
 
+    @Benchmark
     public Iterable<Tweet> getAllTweets() {
         return tweetRepository.findAll();
     }
