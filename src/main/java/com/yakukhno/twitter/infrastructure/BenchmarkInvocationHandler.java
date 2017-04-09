@@ -19,10 +19,16 @@ public class BenchmarkInvocationHandler implements InvocationHandler {
         if (benchmark != null && benchmark.value()) {
             long startTime = System.nanoTime();
             res = method.invoke(object, args);
-            System.out.println(System.nanoTime() - startTime + " ns");
+            long finishTime = System.nanoTime() - startTime;
+            System.out.println(getFormattedString(method, finishTime));
         } else {
             res = method.invoke(object, args);
         }
         return res;
+    }
+
+    private String getFormattedString(Method method, long finishTime) {
+        return String.format("%s.%s() %dns", object.getClass().getSimpleName(),
+                method.getName(), finishTime);
     }
 }

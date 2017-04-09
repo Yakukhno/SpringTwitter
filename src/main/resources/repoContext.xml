@@ -6,4 +6,6 @@
     <bean name="tweetRepository"
           class="com.yakukhno.twitter.repository.InMemTweetRepository"
           init-method="initialize"/>
+
+    <bean class="com.yakukhno.twitter.infrastructure.BenchmarkBeanPostProcessor"/>
 </beans>
