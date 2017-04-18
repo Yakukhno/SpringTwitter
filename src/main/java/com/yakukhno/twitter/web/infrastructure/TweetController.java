@@ -1,7 +1,7 @@
 package com.yakukhno.twitter.web.infrastructure;
 
+import com.yakukhno.twitter.service.TweetService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,14 +9,19 @@ import java.io.IOException;
 import java.io.PrintWriter;
 
 @Controller
-public class HelloController {
+public class TweetController implements MyController {
 
-    @RequestMapping("/hello")
+    private TweetService tweetService;
+
+    public TweetController(TweetService tweetService) {
+        this.tweetService = tweetService;
+    }
+
+    @Override
     public void handleRequest(HttpServletRequest request,
                               HttpServletResponse response)
             throws IOException {
-        try (PrintWriter out = response.getWriter()) {
-            out.println("<b>Hello</b>");
-        }
+        PrintWriter out = response.getWriter();
+        tweetService.getAllTweets().forEach(out::println);
     }
 }

@@ -17,7 +17,7 @@ public class DispatcherServlet extends HttpServlet {
     public void init() throws ServletException {
         ConfigurableApplicationContext commonContext
                 = (ConfigurableApplicationContext) getServletContext()
-                        .getAttribute("commonContext");
+                .getAttribute("commonContext");
         String webContextName = getInitParameter("contextConfigLocation");
         webContext = new ClassPathXmlApplicationContext(
                 new String[]{webContextName}, commonContext
@@ -44,7 +44,8 @@ public class DispatcherServlet extends HttpServlet {
     protected void processRequest(HttpServletRequest request,
                                   HttpServletResponse response)
             throws ServletException, IOException {
-        String beanName = getBeanNameFromURI(request);
+        HandlerMapping handlerMapping = webContext.getBean("handlerMapping", HandlerMapping.class);
+        String beanName = handlerMapping.beanNameFromRequest(request);
         handleRequest(beanName, request, response);
     }
 
@@ -57,8 +58,8 @@ public class DispatcherServlet extends HttpServlet {
         }
     }
 
-    private String getBeanNameFromURI(HttpServletRequest request) {
-        String requestURI = request.getRequestURI();
-        return requestURI.substring(requestURI.lastIndexOf('/'));
-    }
+//    private String getBeanNameFromURI(HttpServletRequest request) {
+//        String requestURI = request.getRequestURI();
+//        return requestURI.substring(requestURI.lastIndexOf('/'));
+//    }
 }

@@ -9,12 +9,13 @@ import javax.servlet.ServletContextListener;
 
 public class CommonSpringContextInitializer implements ServletContextListener {
 
+    private ConfigurableApplicationContext springContext;
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
         ServletContext servletContext = servletContextEvent.getServletContext();
         String[] springContexts = getCommonContextConfigLocations(servletContext);
-        ConfigurableApplicationContext springContext
-                = new ClassPathXmlApplicationContext(springContexts);
+        springContext = new ClassPathXmlApplicationContext(springContexts);
         servletContext.setAttribute("commonContext", springContext);
     }
 
@@ -24,5 +25,7 @@ public class CommonSpringContextInitializer implements ServletContextListener {
     }
 
     @Override
-    public void contextDestroyed(ServletContextEvent servletContextEvent) {}
+    public void contextDestroyed(ServletContextEvent servletContextEvent) {
+        springContext.close();
+    }
 }
