@@ -1,5 +1,6 @@
 package com.yakukhno.twitter.infrastructure;
 
+import com.yakukhno.twitter.infrastructure.custom.BenchmarkInvocationHandler;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 

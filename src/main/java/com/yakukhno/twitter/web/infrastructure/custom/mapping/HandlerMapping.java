@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.web.infrastructure;
+package com.yakukhno.twitter.web.infrastructure.custom.mapping;
 
 import javax.servlet.http.HttpServletRequest;
 

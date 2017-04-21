@@ -11,12 +11,28 @@
         http://www.springframework.org/schema/context/spring-context.xsd">
 
     <context:component-scan base-package="com.yakukhno.twitter.web"/>
+    <!--<mvc:annotation-driven conversion-service="conversionService"/>-->
     <mvc:annotation-driven/>
+
+    <mvc:view-resolvers>
+        <mvc:jsp prefix="/WEB-INF/jsp/"
+                 suffix=".jsp"
+                 view-class="org.springframework.web.servlet.view.JstlView"/>
+    </mvc:view-resolvers>
+
+    <bean id="conversionService"
+          class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <bean class="com.yakukhno.twitter.web.infrastructure.TweetConverter"/>
+            </set>
+        </property>
+    </bean>
 
     <!--<bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>-->
 
     <!--<bean name="handlerMapping"-->
-          <!--class="com.yakukhno.twitter.web.infrastructure.BeanNameURLHandlerMapping"/>-->
+          <!--clacom.yakukhno.twitter.web.infrastructure.mapping.BeanNameURLHandlerMappingping"/>-->
 
     <!--<bean id="/hello"-->
           <!--class="com.yakukhno.twitter.web.infrastructure.HelloController"/>-->

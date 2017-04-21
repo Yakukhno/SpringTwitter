@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.infrastructure;
+package com.yakukhno.twitter.infrastructure.custom;
 
 public class InitialContext {
     private Config config;

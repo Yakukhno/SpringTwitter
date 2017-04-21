@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.web.infrastructure;
+package com.yakukhno.twitter.web.infrastructure.custom;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

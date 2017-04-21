@@ -11,9 +11,9 @@
 
     <bean class="com.yakukhno.twitter.infrastructure.BenchmarkBeanPostProcessor"/>
 
-    <beans profile="test">
-        <bean name="tweetRepository"
-              class="com.yakukhno.twitter.repository.InMemTweetRepository"
-              init-method="initialize"/>
-    </beans>
+    <!--<beans profile="test">-->
+        <!--<bean name="tweetRepository"-->
+              <!--class="com.yakukhno.twitter.repository.InMemTweetRepository"-->
+              <!--init-method="initialize"/>-->
+    <!--</beans>-->
 </beans>

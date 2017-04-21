@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.web.infrastructure;
+package com.yakukhno.twitter.web.infrastructure.custom;
 
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;

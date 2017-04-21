@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.infrastructure;
+package com.yakukhno.twitter.infrastructure.custom;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

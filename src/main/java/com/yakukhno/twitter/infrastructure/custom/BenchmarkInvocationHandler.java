@@ -1,4 +1,6 @@
-package com.yakukhno.twitter.infrastructure;
+package com.yakukhno.twitter.infrastructure.custom;
+
+import com.yakukhno.twitter.infrastructure.Benchmark;
 
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;

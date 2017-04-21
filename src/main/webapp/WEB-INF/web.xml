@@ -4,13 +4,17 @@
 	      http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
          version="3.0">
     <context-param>
-        <param-name>commonContextConfigLocation</param-name>
+        <param-name>contextConfigLocation</param-name>
         <param-value>classpath:/repoContext.xml classpath:/serviceContext.xml</param-value>
     </context-param>
 
     <listener>
-        <listener-class>com.yakukhno.twitter.web.infrastructure.CommonSpringContextInitializer</listener-class>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
+    <!--<listener>-->
+        <!--<listener-clcom.yakukhno.twitter.web.infrastructure.custom.CommonSpringContextInitializerizer</listener-class>-->
+    <!--</listener>-->
 
     <servlet>
         <servlet-name>dispatcherServlet</servlet-name>

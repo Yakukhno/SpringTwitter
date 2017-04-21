@@ -1,4 +1,4 @@
-package com.yakukhno.twitter.infrastructure;
+package com.yakukhno.twitter.infrastructure.custom;
 
 import com.yakukhno.twitter.repository.InMemTweetRepository;
 import com.yakukhno.twitter.service.TweetServiceImpl;
@@ -6,7 +6,7 @@ import com.yakukhno.twitter.service.TweetServiceImpl;
 import java.util.HashMap;
 import java.util.Map;
 
-public class JavaConfig implements Config{
+public class JavaConfig implements Config {
     private final Map<String, Class<?>> classes = new HashMap<>();
 
     {

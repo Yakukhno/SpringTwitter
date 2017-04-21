@@ -1,5 +1,6 @@
-package com.yakukhno.twitter.web.infrastructure;
+package com.yakukhno.twitter.web.infrastructure.custom;
 
+import com.yakukhno.twitter.web.infrastructure.custom.mapping.HandlerMapping;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
