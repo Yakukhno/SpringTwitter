@@ -34,8 +34,8 @@
     <!--<bean name="handlerMapping"-->
           <!--clacom.yakukhno.twitter.web.infrastructure.mapping.BeanNameURLHandlerMappingping"/>-->
 
-    <!--<bean id="/hello"-->
+    <!--<btweetIdn id="/hello"-->
           <!--class="com.yakukhno.twitter.web.infrastructure.HelloController"/>-->
-    <!--<bean id="/tweet"-->
+    <!--<btweetIdn id="/tweet"-->
           <!--class="com.yakukhno.twitter.web.infrastructure.TweetController" autowire="constructor"/>-->
 </beans>

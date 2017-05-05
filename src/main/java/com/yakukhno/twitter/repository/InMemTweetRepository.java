@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Repository("tweetRepository")
 public class InMemTweetRepository implements TweetRepository {
@@ -29,13 +30,17 @@ public class InMemTweetRepository implements TweetRepository {
     @Override
     public Optional<Tweet> find(int id) {
         return tweets.stream()
-                .filter(tweet -> tweet.getId() == id)
-                .findFirst();
+                .filter(tweet -> tweet.getTweetId() == id)
+                .findFirst()
+                .map(tweet -> tweet = new Tweet(tweet));
     }
 
     @Override
     @Benchmark
-    public Iterable<Tweet> findAll() {
-        return new ArrayList<>(tweets);
+    public List<Tweet> findAll() {
+        return new ArrayList<>(tweets)
+                .stream()
+                .map(tweet -> tweet = new Tweet(tweet))
+                .collect(Collectors.toList());
     }
 }

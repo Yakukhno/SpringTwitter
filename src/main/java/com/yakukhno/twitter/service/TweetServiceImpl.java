@@ -4,9 +4,12 @@ import com.yakukhno.twitter.domain.Tweet;
 import com.yakukhno.twitter.infrastructure.Benchmark;
 import com.yakukhno.twitter.repository.TweetRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
+@Service("tweetService")
 public class TweetServiceImpl implements TweetService {
     private final TweetRepository tweetRepository;
 
@@ -27,7 +30,7 @@ public class TweetServiceImpl implements TweetService {
 
     @Override
     @Benchmark
-    public Iterable<Tweet> getAllTweets() {
+    public List<Tweet> getAllTweets() {
         return tweetRepository.findAll();
     }
 }

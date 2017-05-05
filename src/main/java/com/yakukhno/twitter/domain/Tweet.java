@@ -1,6 +1,8 @@
 package com.yakukhno.twitter.domain;
 
-public class Tweet {
+import org.springframework.hateoas.ResourceSupport;
+
+public class Tweet extends ResourceSupport {
     private int id;
     private User user;
     private String text;
@@ -14,7 +16,13 @@ public class Tweet {
         this.text = text;
     }
 
-    public int getId() {
+    public Tweet(Tweet tweet) {
+        this.id = tweet.id;
+        this.user = tweet.user;
+        this.text = tweet.text;
+    }
+
+    public int getTweetId() {
         return id;
     }
 

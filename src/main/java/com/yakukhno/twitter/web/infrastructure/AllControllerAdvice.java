@@ -3,6 +3,7 @@ package com.yakukhno.twitter.web.infrastructure;
 import com.yakukhno.twitter.domain.Tweet;
 import com.yakukhno.twitter.domain.User;
 import com.yakukhno.twitter.service.TweetService;
+import com.yakukhno.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,18 +13,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.beans.PropertyEditorSupport;
 import java.util.Optional;
 
-@ControllerAdvice
+//@ControllerAdvice
 public class AllControllerAdvice {
     @Autowired
     private TweetService tweetService;
-
-    @ModelAttribute("user")
-    public User unnamedUser() {
-        User user = new User("unnamed");
-        user.setName(user.getName() + ": " + user.hashCode());
-        System.out.println(user.hashCode());
-        return user;
-    }
+    @Autowired
+    private UserService userService;
 
     @InitBinder
     public void tweetBinder(WebDataBinder binder) {
@@ -36,4 +31,6 @@ public class AllControllerAdvice {
             }
         });
     }
+
+
 }
