@@ -1,9 +1,10 @@
 package com.yakukhno.twitter.domain;
 
-import org.springframework.hateoas.ResourceSupport;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class Tweet extends ResourceSupport {
+public class Tweet {
     private int id;
+    @JsonIgnore
     private User user;
     private String text;
 
@@ -22,7 +23,7 @@ public class Tweet extends ResourceSupport {
         this.text = tweet.text;
     }
 
-    public int getTweetId() {
+    public int getId() {
         return id;
     }
 

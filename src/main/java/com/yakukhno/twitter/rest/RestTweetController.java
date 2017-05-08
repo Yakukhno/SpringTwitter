@@ -2,16 +2,12 @@ package com.yakukhno.twitter.rest;
 
 import com.yakukhno.twitter.domain.Tweet;
 import com.yakukhno.twitter.service.TweetService;
-import com.yakukhno.twitter.web.infrastructure.UserController;
 import com.yakukhno.twitter.web.infrastructure.resource.TweetResource;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.Resources;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
@@ -30,23 +26,17 @@ public class RestTweetController {
     }
 
     @GetMapping(value = "/tweet", produces = "application/json")
-    public Resources<TweetResource> allTweets() {
-        return new Resources<>(
-                tweetService.getAllTweets().stream()
+    public List<TweetResource> allTweets() {
+        return tweetService.getAllTweets().stream()
                         .map(TweetResource::new)
-                        .collect(Collectors.toList())
-        );
+                        .collect(Collectors.toList());
     }
 
     @GetMapping(value = "/tweet/{id}", produces = "application/json")
     public ResponseEntity<TweetResource> getTweet(@PathVariable int id) {
-        final HttpStatus[] httpStatus = {HttpStatus.NOT_FOUND};
-        Optional<Tweet> tweetOptional = tweetService.getTweet(id);
-        tweetOptional.ifPresent(tweet -> {
-            httpStatus[0] = HttpStatus.OK;
-        });
-        return new ResponseEntity<>(tweetOptional.map(TweetResource::new).orElse(null),
-                httpStatus[0]);
+        return tweetService.getTweet(id)
+                .map(tweet -> ResponseEntity.ok(new TweetResource(tweet)))
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping(value = "/tweet",
@@ -60,7 +50,7 @@ public class RestTweetController {
 //    private void addTweetLinks(Tweet tweet) {
 //        Link selfRel = linkTo(RestTweetController.class)
 //                .slash("tweet")
-//                .slash(tweet.getTweetId())
+//                .slash(tweet.getId())
 //                .withSelfRel();
 //        Link userLink = linkTo(UserController.class)
 //                .slash(tweet.getUser().getId())

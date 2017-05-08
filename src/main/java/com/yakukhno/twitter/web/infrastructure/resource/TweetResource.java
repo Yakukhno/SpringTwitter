@@ -14,7 +14,7 @@ public class TweetResource extends ResourceSupport {
 
     public TweetResource(Tweet tweet) {
         this.tweet = tweet;
-        Link selfRel = linkTo(methodOn(RestTweetController.class).getTweet(tweet.getTweetId()))
+        Link selfRel = linkTo(methodOn(RestTweetController.class).getTweet(tweet.getId()))
                 .withSelfRel();
         Link userLink = linkTo(UserController.class)
                 .slash(tweet.getUser().getId())

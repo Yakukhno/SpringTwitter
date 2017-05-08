@@ -30,7 +30,7 @@ public class InMemTweetRepository implements TweetRepository {
     @Override
     public Optional<Tweet> find(int id) {
         return tweets.stream()
-                .filter(tweet -> tweet.getTweetId() == id)
+                .filter(tweet -> tweet.getId() == id)
                 .findFirst()
                 .map(tweet -> tweet = new Tweet(tweet));
     }

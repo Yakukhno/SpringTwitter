@@ -1,6 +1,5 @@
 package com.yakukhno.twitter.web.infrastructure;
 
-import com.sun.org.apache.xpath.internal.operations.Mod;
 import com.yakukhno.twitter.domain.User;
 import com.yakukhno.twitter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +8,6 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 
 import java.beans.PropertyEditorSupport;
 
